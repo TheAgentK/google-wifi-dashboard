@@ -22,7 +22,7 @@
 }
 
 h3 {
-    margin: 0;
+  margin: 0;
 }
 
 .title {

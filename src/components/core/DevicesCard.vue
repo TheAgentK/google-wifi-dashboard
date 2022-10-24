@@ -7,9 +7,9 @@
     <div class="content">
       <div v-if="$store.state.devices.length == 0">
         <p>loading devices</p>
-      </div> 
+      </div>
       <div
-        v-for="device in sortedDevices.slice(0, 3)"
+        v-for="device in mainNetworkDevices.slice(0, 3)"
         :key="device.id"
         v-else
       >
@@ -60,9 +60,20 @@ export default {
   },
   computed: {
     sortedDevices() {
-      return this.$store.state.devices.sort((a, b) => {
-        return !!b.connected - !!a.connected;
-      }).filter((e) => e.friendlyName !== 'Unnamed device');
+      const devices = this.$store.state.devices;
+      return devices
+        .sort((a, b) => !!b.connected - !!a.connected)
+        .filter((e) => e.friendlyName !== "Unnamed device");
+    },
+    mainNetworkDevices() {
+      return this.$store.state.devices.filter(
+        (e) => e.connectionType === "WIRELESS" && e.connected
+      );
+    },
+    guestNetworkDevices() {
+      return this.$store.state.devices.filter(
+        (e) => e.connectionType === "GUEST_WIRELESS" && e.connected
+      );
     },
   },
 };

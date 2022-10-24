@@ -13,7 +13,7 @@
 
 <script>
 import PointsCard from "@/components/core/PointsCard.vue";
-import Navigation from '../components/core/Navigation.vue';
+import Navigation from "../components/core/NavigationCard.vue";
 
 export default {
   data() {
@@ -26,7 +26,7 @@ export default {
   },
   components: {
     PointsCard,
-    Navigation
+    Navigation,
   },
 };
 </script>

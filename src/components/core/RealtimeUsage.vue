@@ -121,7 +121,7 @@ export default {
       this.updateChart();
     }, 1000);
   },
-  beforeDestroy() {
+  beforeUnmount() {
     if (this.intervalUpdate) clearInterval(this.intervalUpdate);
   },
   computed: {
@@ -145,7 +145,6 @@ export default {
           ]);
         }
       });
-      this.$refs.chart.updateSeries(this.series);
       // TODO remove old data (to prevent memory leaking)
     },
   },

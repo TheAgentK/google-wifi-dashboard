@@ -1,20 +1,19 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
-import App from '@/App.vue'
-import VueRouter from 'vue-router'
-import VueApexCharts from 'vue-apexcharts'
-
-import { library } from '@fortawesome/fontawesome-svg-core';
-import { faGlobe, faNetworkWired, faLaptop, faWifi, faArrowLeft, faArrowUp, faArrowDown } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-
-import { createStore } from '@/store/store'
-
-import Home from '@/views/Home.vue'
-import Network from '@/views/Network.vue'
-import Devices from '@/views/Devices.vue'
-import Points from '@/views/Points.vue'
-import NotFound from '@/views/NotFound.vue'
+import { store } from "@/store/store";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import {
+  faArrowDown,
+  faArrowLeft,
+  faArrowUp,
+  faGlobe,
+  faLaptop,
+  faNetworkWired,
+  faWifi,
+} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import { createApp } from "vue";
+import VueApexCharts from "vue3-apexcharts";
+import App from "./App.vue";
+import router from "./router";
 
 library.add([
   faGlobe,
@@ -23,32 +22,15 @@ library.add([
   faWifi,
   faArrowLeft,
   faArrowUp,
-  faArrowDown
-])
+  faArrowDown,
+]);
 
-Vue.use(Vuex)
-Vue.use(VueRouter)
-Vue.use(VueApexCharts)
+const app = createApp(App);
 
-Vue.component('apexchart', VueApexCharts)
-Vue.component('font-awesome-icon', FontAwesomeIcon)
+app.use(store);
+app.use(router);
+app.use(VueApexCharts);
 
-Vue.config.productionTip = false
+app.component("font-awesome-icon", FontAwesomeIcon);
 
-const router = new VueRouter({
-  mode: 'hash',
-  routes: [
-      { path: '/', component: Home },
-      { path: '/network', component: Network },
-      { path: '/devices', component: Devices },
-      { path: '/points', component: Points },
-      { path: '*', component: NotFound }
-  ]
-});
-
-const store = createStore()
-new Vue({
-  router,
-  store,
-  render: h => h(App)
-}).$mount('#app')
+app.mount("#app");

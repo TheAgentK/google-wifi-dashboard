@@ -65,12 +65,8 @@
 </style>
 
 <script>
-import SpeedTestResult from "@/components/partials/SpeedTestResult.vue";
-
 export default {
-  components: {
-    SpeedTestResult,
-  },
+  components: {},
   methods: {
     getConnectionStatus(apId) {
       if (!this.$store.state.realtimeMetrics?.meshMetrics) return;
@@ -80,7 +76,7 @@ export default {
       );
       if (!find) return;
       return find.speed.expandedSpeedText;
-    }
+    },
   },
 };
 </script>

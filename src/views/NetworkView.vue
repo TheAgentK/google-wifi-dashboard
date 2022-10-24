@@ -14,8 +14,8 @@
 
 <script>
 import NetworkCard from "@/components/core/NetworkCard.vue";
-import Navigation from '../components/core/Navigation.vue';
-import RealtimeUsage from '../components/core/RealtimeUsage.vue';
+import Navigation from "../components/core/NavigationCard.vue";
+import RealtimeUsage from "../components/core/RealtimeUsage.vue";
 
 export default {
   data() {
@@ -29,9 +29,8 @@ export default {
   components: {
     NetworkCard,
     Navigation,
-    RealtimeUsage
+    RealtimeUsage,
   },
 };
 </script>
-    De,
-    RealtimeUsagevicesCard
+De, RealtimeUsagevicesCard

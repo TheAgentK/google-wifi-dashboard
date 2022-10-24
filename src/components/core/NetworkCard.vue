@@ -1,76 +1,119 @@
 <template>
-    <div class="card">
-        <div class="title" @click="$router.push('/network')">
-            <font-awesome-icon icon="wifi" class="icon" />
-            <p>NETWORK</p>
-        </div>
-        <div class="content">
-            <div class="row">
-                <speed-test-result backgroundColor="#35483e" :speed="($store.state.speedTestResults.receiveWanSpeedBps / 1000 / 1000).toPrecision(3)" subtext="Mbps download" />
-                <speed-test-result backgroundColor="#493955" :speed="($store.state.speedTestResults.transmitWanSpeedBps / 1000 / 1000).toPrecision(3)" subtext="Mbps upload" />
-            </div>
-            <p>Your last speed test was on {{ new Date($store.state.speedTestResults.timestamp).toDateString() }}</p>
-            <!-- <p class="action" @click="runSpeedTest()">Run speed test</p> -->
-        </div>
+  <div class="card">
+    <div class="title" @click="$router.push('/network')">
+      <font-awesome-icon icon="wifi" class="icon" />
+      <p>NETWORK</p>
     </div>
+    <div class="content">
+      <div class="row">
+        <speed-test-result
+          backgroundColor="#35483e"
+          :speed="
+            (
+              $store.state.speedTestResults.receiveWanSpeedBps /
+              1000 /
+              1000
+            ).toPrecision(3)
+          "
+          subtext="Mbps download"
+        />
+        <speed-test-result
+          backgroundColor="#493955"
+          :speed="
+            (
+              $store.state.speedTestResults.transmitWanSpeedBps /
+              1000 /
+              1000
+            ).toPrecision(3)
+          "
+          subtext="Mbps upload"
+        />
+      </div>
+      <div class="row">
+        <div v-for="card in $store.state.insightCards" :key="card.id">
+          <div v-if="card.category === 'INTERNET_USAGE'">
+            <insight-card :card="card" class="no-border" />
+          </div>
+        </div>
+      </div>
+      <p>
+        Your last speed test was on
+        {{ new Date($store.state.speedTestResults.timestamp).toDateString() }}
+      </p>
+      <!-- <p class="action" @click="runSpeedTest()">Run speed test</p> -->
+    </div>
+  </div>
 </template>
 
 <style scoped>
 .card {
-    border: 2px solid #595c61;
-    border-radius: .5rem;
-    margin: 0 auto;
-    max-width: 40rem;
-    margin-bottom: 2rem;
+  border: 2px solid #595c61;
+  border-radius: 0.5rem;
+  margin: 0 auto;
+  max-width: 40rem;
+  margin-bottom: 2rem;
 }
 
 .icon {
-    margin-right: .75rem;
+  margin-right: 0.75rem;
 }
 
 p.action {
-    color: #84b2ef;
-    font-weight: bold;
-    cursor: pointer;
+  color: #84b2ef;
+  font-weight: bold;
+  cursor: pointer;
 }
 
 .title {
-    display: flex;
-    flex-direction: row;
-    
-    align-items: center;
+  display: flex;
+  flex-direction: row;
 
-    border-bottom: 2px solid #595c61;
-    padding-left: 1rem;
-    text-align: left;
+  align-items: center;
 
-    cursor: pointer;
+  border-bottom: 2px solid #595c61;
+  padding-left: 1rem;
+  text-align: left;
+
+  cursor: pointer;
 }
 
 .row {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.no-border {
+  border: 0px;
+}
+
+.card .card {
+  margin-left: 1rem;
+  margin-right: 1rem;
 }
 </style>
 
 <script>
-import SpeedTestResult from '@/components/partials/SpeedTestResult.vue'
-import { getGoogleWifiApi } from '@/lib/googleWifiApi'
+import InsightCard from "@/components/core/InsightCard.vue";
+import SpeedTestResult from "@/components/partials/SpeedTestResult.vue";
+import { getGoogleWifiApi } from "@/lib/googleWifiApi";
 
 export default {
-    components: {
-        SpeedTestResult
+  components: {
+    SpeedTestResult,
+    InsightCard,
+  },
+  methods: {
+    async runSpeedTest() {
+      const apId = this.$store.state.realtimeMetrics.meshMetrics[0].apId;
+
+      if (apId) {
+        const res = await getGoogleWifiApi().requestAccessPointLocalSpeedTest(
+          apId
+        );
+        console.log(res);
+      }
     },
-    methods: {
-        async runSpeedTest() {
-            const apId = this.$store.state.realtimeMetrics.meshMetrics[0].apId
-            
-            if (apId) {
-                const res = await getGoogleWifiApi().requestAccessPointLocalSpeedTest(apId);
-                console.log(res);
-            }
-        }
-    }
-}
+  },
+};
 </script>

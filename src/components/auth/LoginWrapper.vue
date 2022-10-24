@@ -8,15 +8,15 @@
 </template>
 
 <script>
-import Setup from '@/components/partials/Setup.vue'
-import { mapGetters } from 'vuex'
+import Setup from "@/components/partials/SetupCard.vue";
+import { mapGetters } from "vuex";
 
 export default {
   components: {
     Setup,
   },
   computed: {
-    ...mapGetters(['isLoggedIn'])
-  }
+    ...mapGetters(["isLoggedIn"]),
+  },
 };
 </script>

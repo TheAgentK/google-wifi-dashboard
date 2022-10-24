@@ -1,3 +1,28 @@
+<script>
+import IconBubble from "@/components/core/IconBubble.vue";
+import NetworkCard from "@/components/core/NetworkCard.vue";
+import DevicesCard from "../components/core/DevicesCard.vue";
+
+export default {
+  data() {
+    return {
+      status: {
+        state: "",
+        message: "",
+      },
+    };
+  },
+  mounted() {
+    this.$store.dispatch("updateData");
+  },
+  components: {
+    IconBubble,
+    NetworkCard,
+    DevicesCard,
+  },
+};
+</script>
+
 <template>
   <div class="home">
     <p v-if="status.state">{{ `${status.state}: ${status.message}` }}</p>
@@ -24,12 +49,6 @@
         icon="laptop"
         :onClick="() => $router.push('/devices')"
       />
-    </div>
-
-    <div v-for="card in $store.state.insightCards" :key="card.id">
-      <div v-if="card.category != 'INFO'">
-        <insight-card :card="card" />
-      </div>
     </div>
 
     <network-card />
@@ -59,31 +78,3 @@ p {
   font-weight: bold;
 }
 </style>
-
-<script>
-import IconBubble from "@/components/core/IconBubble.vue";
-import NetworkCard from "@/components/core/NetworkCard.vue";
-import DevicesCard from "../components/core/DevicesCard.vue";
-import InsightCard from "@/components/core/InsightCard.vue";
-
-export default {
-  data() {
-    return {
-      status: {
-        state: "",
-        message: "",
-      },
-    };
-  },
-  mounted() {
-    this.$store.dispatch("updateData");
-  },
-  components: {
-    IconBubble,
-    NetworkCard,
-    DevicesCard,
-    InsightCard
-  },
-};
-</script>
-    DevicesCard
