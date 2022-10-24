@@ -11,11 +11,6 @@ export default defineConfig(({ mode }) => {
     define: {
       __APP_ENV__: env.APP_ENV,
     },
-    build: {
-      outDir: env.VITE_BUILDPATH || "public",
-      emptyOutDir: env.VITE_BUILDPATH ? true : false,
-    },
-    base: "",
     plugins: [vue()],
     resolve: {
       alias: {
