@@ -2,7 +2,7 @@
   <div class="card">
     <div class="title" @click="$router.push('/network')">
       <font-awesome-icon icon="wifi" class="icon" />
-      <p>NETWORK</p>
+      <p>{{ $t("network.title").toUpperCase() }}</p>
     </div>
     <div class="content">
       <div class="row">
@@ -15,7 +15,7 @@
               1000
             ).toPrecision(3)
           "
-          subtext="Mbps download"
+          :subtext="`${this.$t('network.download_speed')}`"
         />
         <speed-test-result
           backgroundColor="#493955"
@@ -26,21 +26,23 @@
               1000
             ).toPrecision(3)
           "
-          subtext="Mbps upload"
+          :subtext="`${this.$t('network.upload_speed')}`"
         />
       </div>
       <div class="row">
         <div v-for="card in $store.state.insightCards" :key="card.id">
           <div v-if="card.category === 'INTERNET_USAGE'">
-            <insight-card :card="card" class="no-border" />
+            <insight-card :card="card" class="no-border text-center" />
           </div>
         </div>
       </div>
-      <p>
-        Your last speed test was on
+      <!-- <p>
+        {{ $t("network.latest_speedtest") }}
         {{ new Date($store.state.speedTestResults.timestamp).toDateString() }}
+      </p> -->
+      <p class="action" @click="runSpeedTest()">
+        {{ $t("network.run_speedtest") }}
       </p>
-      <!-- <p class="action" @click="runSpeedTest()">Run speed test</p> -->
     </div>
   </div>
 </template>
@@ -62,6 +64,7 @@ p.action {
   color: #84b2ef;
   font-weight: bold;
   cursor: pointer;
+  margin-top: 0px;
 }
 
 .title {
@@ -85,6 +88,10 @@ p.action {
 
 .no-border {
   border: 0px;
+  margin-bottom: 0px;
+}
+.text-center {
+  text-align: center;
 }
 
 .card .card {

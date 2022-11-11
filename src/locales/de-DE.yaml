@@ -1,0 +1,38 @@
+404:
+  title: Seite nicht gefunden
+  back: Zurück
+
+home:
+  welcome: Hier ist ein aufschlussreicher Kommentar zur Gesamtleistung Ihres Netzes!
+  internet: Internet
+  accespoints: WLAN-Geräte
+
+network:
+  title: Netzwerk
+  download_speed: Mbit/s Download
+  upload_speed: Mbit/s Upload
+  latest_speedtest: Ihr letzter Geschwindigkeitstest war am
+  run_speedtest: Geschwindigkeitstest durchführen
+  speed_unit: Kbit/s
+  realtime_usage:
+    speed_unit: Mbit/s
+    title: Echtzeitnutzung
+    current_upload: Aktueller Upload
+    current_download: Aktueller Download
+
+devices:
+  title: Geräte
+  loading: Geräte werden geladen
+  primary: Primäres Netzwerk
+  guestnetwork: Gastnetzwerk
+  disconnected: Offline
+  speedtext:
+    wired: Kabelgebunden
+    ok_connection: OK connection
+    great_connection: Great connection
+    weak_connection: Weak connection
+
+accesspoint:
+  light: Helligkeit der Statusanzeige
+  connection:
+    wired: Kabelgebunden

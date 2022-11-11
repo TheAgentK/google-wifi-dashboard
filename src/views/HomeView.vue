@@ -12,7 +12,20 @@ export default {
       },
     };
   },
+  methods: {
+    getWelcomeMessage() {
+      console.log(this.$store.state);
+      const insightCard = this.$store.state.insightCards.filter(
+        (e) => e.category === "ACCESS_POINTS"
+      );
+      if (insightCard.length === 1) {
+        return insightCard[0].card.title;
+      }
+      return "";
+    },
+  },
   mounted() {
+    console.log(this.$store);
     this.$store.dispatch("updateData");
   },
   components: {
@@ -28,22 +41,24 @@ export default {
     <p v-if="status.state">{{ `${status.state}: ${status.message}` }}</p>
     <h1 v-text="$store.state.privateSsid" />
     <p>
-      Here's an insightful comment into the overall performance of your network!
+      {{ getWelcomeMessage() }}
     </p>
 
     <div class="overviewBubbles">
       <icon-bubble
-        text="Internet"
+        :text="`${this.$t('home.internet')}`"
         icon="globe"
         :onClick="() => $router.push('/network')"
       />
       <icon-bubble
-        :text="`Wifi devices (${$store.state.wifiDevices.length})`"
+        :text="`${this.$t('home.accespoints')} (${
+          $store.state.wifiDevices.length
+        })`"
         icon="network-wired"
         :onClick="() => $router.push('/points')"
       />
       <icon-bubble
-        :text="`Devices (${
+        :text="`${this.$t('devices.title')} (${
           $store.state.devices.filter((d) => d.connected).length
         })`"
         icon="laptop"

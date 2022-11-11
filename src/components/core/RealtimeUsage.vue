@@ -1,15 +1,7 @@
 <template>
   <div class="card">
     <div class="content">
-      <h2>Network speed and usage</h2>
-      <p class="subtitle">
-        <font-awesome-icon icon="arrow-down" />
-        {{ (realtimeData.receiveSpeedBps / 1000 / 1000).toPrecision(3) }} Mbps
-      </p>
-      <p class="subtitle">
-        <font-awesome-icon icon="arrow-up" />
-        {{ (realtimeData.transmitSpeedBps / 1000 / 1000).toPrecision(3) }} Mbps
-      </p>
+      <h2>{{ $t("network.realtime_usage.title") }}</h2>
       <apexchart
         ref="chart"
         width="95%"
@@ -17,6 +9,22 @@
         :options="chartOptions"
         :series="series"
       ></apexchart>
+      <div class="row current-upload-download">
+        <div class="current-upload">
+          {{ (realtimeData.transmitSpeedBps / 1000 / 1000).toPrecision(3) }}
+          {{ $t("network.realtime_usage.speed_unit") }}
+          <div class="subtitle">
+            {{ $t("network.realtime_usage.current_upload") }}
+          </div>
+        </div>
+        <div class="current-download">
+          {{ (realtimeData.receiveSpeedBps / 1000 / 1000).toPrecision(3) }}
+          {{ $t("network.realtime_usage.speed_unit") }}
+          <div class="subtitle">
+            {{ $t("network.realtime_usage.current_download") }}
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -56,9 +64,34 @@
 }
 
 .row {
+  align-items: stretch;
   display: flex;
-  flex-direction: row;
-  justify-content: center;
+}
+.current-upload-download {
+  margin-top: 1rem;
+}
+.row > div {
+  flex: 1 1;
+  text-align: center;
+}
+.current-upload {
+  color: #d7adfb;
+  position: relative;
+}
+.current-upload:after {
+  position: absolute;
+  content: "";
+  border-right: 1px solid #969ca2;
+  height: 90%;
+  right: 0px;
+  top: 0px;
+}
+.current-download {
+  color: #a8dab5;
+}
+.current-upload .subtitle,
+.current-download .subtitle {
+  color: #969ca2;
 }
 </style>
 
@@ -68,6 +101,7 @@ export default {
     return {
       intervalUpdate: null,
       chartOptions: {
+        colors: ["#D7ADFB", "#A8DAB5"],
         chart: {
           id: "realtime-metrics",
           toolbar: {
@@ -108,6 +142,9 @@ export default {
           hover: {
             size: 0,
           },
+        },
+        legend: {
+          show: false,
         },
       },
       series: [

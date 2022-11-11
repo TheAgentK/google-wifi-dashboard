@@ -1,0 +1,33 @@
+404:
+  title: page not found
+  back: go home
+
+home:
+  welcome: Here's an insightful comment into the overall performance of your network!
+  internet: Internet
+  accespoints: Wifi devices
+
+network:
+  title: Network
+  download_speed: Mbps download
+  upload_speed: Mbps upload
+  latest_speedtest: Your last speed test was on
+  run_speedtest: Run speed test
+  speed_unit: Mbps
+
+devices:
+  title: Devices
+  loading: loading devices
+  primary: Primary network
+  guestnetwork: Guest network
+  disconnected: Disconnected
+  speedtext:
+    wired: Wired
+    ok_connection: Ok connection
+    great_connection: Great connection
+    weak_connection: Weak connection
+
+accesspoint:
+  light: Light
+  connection:
+    wired: Wired

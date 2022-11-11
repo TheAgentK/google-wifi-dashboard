@@ -1,13 +1,21 @@
 <template>
-  <div class="deviceRow">
+  <div class="deviceRow" :class="classObject">
     <p class="title">{{ device.friendlyName }}</p>
     <p class="subtitle" :style="{ 'font-weight': 'bold' }">
       {{ device.friendlyType }}
     </p>
     <p class="subtitle" v-if="metrics.speed">
-      {{ metrics.speed.expandedSpeedText }}
+      {{
+        $t(
+          `devices.speedtext.${metrics.speed.expandedSpeedText
+            .toLowerCase()
+            .replace(/ /g, "_")}`
+        )
+      }}
     </p>
-    <p class="subtitle" v-if="!device.connected">Disconnected</p>
+    <p class="subtitle" v-if="!device.connected">
+      {{ $t("devices.disconnected") }}
+    </p>
     <div v-if="metrics.traffic">
       <div class="metrics">
         <p class="subtitle">
@@ -17,7 +25,7 @@
               ? (metrics.traffic.receiveSpeedBps / 1000 / 1000).toPrecision(3)
               : 0
           }}
-          Mbps
+          {{ $t("network.speed_unit") }}
         </p>
         <p class="subtitle">
           <font-awesome-icon icon="arrow-up" />
@@ -26,7 +34,7 @@
               ? (metrics.traffic.transmitSpeedBps / 1000 / 1000).toPrecision(3)
               : 0
           }}
-          Mbps
+          {{ $t("network.speed_unit") }}
         </p>
       </div>
       <progress-bar :progress="percentage || 0" />
@@ -39,11 +47,16 @@
   border-radius: 0.5rem;
   margin: 0 auto;
   max-width: 40rem;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
 
   display: flex;
   flex-direction: column;
   text-align: left;
+  padding: 1rem;
+}
+
+.isOffline {
+  background-color: #3c4043;
 }
 
 .title {
@@ -89,6 +102,11 @@ export default {
     },
   },
   computed: {
+    classObject() {
+      return {
+        isOffline: !this.device.connected,
+      };
+    },
     percentage() {
       const { transmitSpeedBps, receiveSpeedBps } = this.metrics.traffic;
       return (

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>page not found</h1>
-    <button @click="$router.push('/')">go home</button>
+    <h1>{{ $t("404.title") }}</h1>
+    <button @click="$router.push('/')">{{ $t("404.back") }}</button>
   </div>
 </template>

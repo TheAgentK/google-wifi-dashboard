@@ -1,6 +1,11 @@
 <script setup>
 import LoginWrapper from "@/components/auth/LoginWrapper.vue";
+import { useI18n } from "vue-i18n";
 import { RouterView } from "vue-router";
+
+// set language from browser
+const i18n = useI18n();
+i18n.locale.value = navigator.language || navigator.userLanguage;
 </script>
 
 <template>

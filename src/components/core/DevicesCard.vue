@@ -2,11 +2,11 @@
   <div class="card">
     <div class="title" @click="$router.push('/devices')">
       <font-awesome-icon icon="laptop" class="icon" />
-      <p>DEVICES</p>
+      <p>{{ $t("devices.title").toUpperCase() }}</p>
     </div>
     <div class="content">
       <div v-if="$store.state.devices.length == 0">
-        <p>loading devices</p>
+        <p>{{ $t("devices.loading") }}</p>
       </div>
       <div
         v-for="device in mainNetworkDevices.slice(0, 3)"
@@ -67,7 +67,7 @@ export default {
     },
     mainNetworkDevices() {
       return this.$store.state.devices.filter(
-        (e) => e.connectionType === "WIRELESS" && e.connected
+        (e) => e.connectionType !== "GUEST_WIRELESS" && e.connected
       );
     },
     guestNetworkDevices() {

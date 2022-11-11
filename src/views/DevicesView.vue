@@ -1,18 +1,18 @@
 <template>
   <div class="network">
-    <navigation to="/" text="GO HOME" />
+    <navigation to="/" :text="`${this.$t('network.title')}`" />
     <div v-if="$store.state.devices.length == 0">
-      <p>loading devices</p>
+      <p>{{ $t("devices.loading") }}</p>
     </div>
     <div v-if="$store.state.devices.length != 0">
-      <h2>Primäres Netzwerk</h2>
+      <h2>{{ $t("devices.primary") }}</h2>
       <div v-for="device in mainNetworkDevices" :key="device.id">
         <device-row :device="device" />
       </div>
       <div v-for="device in offlineNetworkDevices" :key="device.id">
         <device-row :device="device" />
       </div>
-      <h2>Gastnetzwerk</h2>
+      <h2>{{ $t("devices.guestnetwork") }}</h2>
       <div v-for="device in guestNetworkDevices" :key="device.id">
         <device-row :device="device" />
       </div>
@@ -39,11 +39,13 @@ export default {
     mainNetworkDevices() {
       console.log(this.$store.state.devices);
       return this.$store.state.devices
-        .filter((e) => e.connectionType === "WIRELESS")
+        .filter((e) => e.connected)
+        .filter((e) => e.connectionType !== "GUEST_WIRELESS")
         .sort((a, b) => a.friendlyName.localeCompare(b.friendlyName));
     },
     guestNetworkDevices() {
       return this.$store.state.devices
+        .filter((e) => e.connected)
         .filter((e) => e.connectionType === "GUEST_WIRELESS")
         .sort((a, b) => a.friendlyName.localeCompare(b.friendlyName));
     },

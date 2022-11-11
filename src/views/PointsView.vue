@@ -1,6 +1,6 @@
 <template>
   <div class="network">
-    <navigation to="/" text="GO HOME" />
+    <navigation to="/" :text="`${this.$t('network.title')}`" />
     <points-card />
   </div>
 </template>

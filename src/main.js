@@ -13,6 +13,7 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { createApp } from "vue";
 import VueApexCharts from "vue3-apexcharts";
 import App from "./App.vue";
+import i18n from "./i18n";
 import router from "./router";
 
 library.add([
@@ -27,6 +28,7 @@ library.add([
 
 const app = createApp(App);
 
+app.use(i18n);
 app.use(store);
 app.use(router);
 app.use(VueApexCharts);

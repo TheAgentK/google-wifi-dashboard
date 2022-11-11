@@ -1,10 +1,6 @@
 <template>
   <div class="card">
-    <div
-      class="content"
-      v-for="point in $store.state.wifiDevices"
-      :key="point.id"
-    >
+    <div class="content" v-for="point in getWifiDevices()" :key="point.id">
       <p class="title">
         {{ point.accessPointSettings.accessPointOtherSettings.apName }}
       </p>
@@ -15,7 +11,8 @@
         {{ getConnectionStatus(point.id) }}
       </p>
       <p class="subtitle">
-        Light: {{ point.accessPointSettings.lightingSettings.intensity || 0 }}%
+        {{ $t("accesspoint.light") }}:
+        {{ point.accessPointSettings.lightingSettings.intensity || 0 }}%
       </p>
     </div>
   </div>
@@ -68,6 +65,13 @@
 export default {
   components: {},
   methods: {
+    getWifiDevices() {
+      return this.$store.state.wifiDevices.sort(
+        (a, b) =>
+          !!b.accessPointProperties.isGroupRoot -
+          !!a.accessPointProperties.isGroupRoot
+      );
+    },
     getConnectionStatus(apId) {
       if (!this.$store.state.realtimeMetrics?.meshMetrics) return;
 
@@ -75,7 +79,9 @@ export default {
         (i) => i.apId === apId
       );
       if (!find) return;
-      return find.speed.expandedSpeedText;
+      return this.$t(
+        `accesspoint.connection.${find.speed.expandedSpeedText.toLowerCase()}`
+      );
     },
   },
 };
