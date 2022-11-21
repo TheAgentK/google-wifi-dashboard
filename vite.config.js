@@ -3,6 +3,7 @@ import vue from "@vitejs/plugin-vue";
 import { fileURLToPath, URL } from "node:url";
 import path from "path";
 import { defineConfig, loadEnv } from "vite";
+import eslint from "vite-plugin-eslint";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -16,6 +17,7 @@ export default defineConfig(({ mode }) => {
       __APP_ENV__: env.APP_ENV,
     },
     plugins: [
+      eslint(),
       vue(),
       vueI18n({
         include: path.resolve(__dirname, "./src/locales/**"),
